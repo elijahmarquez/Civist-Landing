@@ -1,0 +1,806 @@
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+body {
+  font-family: "Lato", sans-serif; /* Lato font was a close match */
+  color: #454545;
+}
+
+/** 
+    * Notice how you have to put a width on fixed elements 
+    * They aren't by default width: 100% when they are block level elements
+    */
+.global-header {
+  background-color: rgb(248, 248, 248);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 40px;
+  padding: 15px 25px;
+  width: calc(100% - 50px);
+}
+
+/** 
+   * =============
+   * NAV
+   * =============
+   * Notice how I want the items to be flex-start, so I don't put anything 
+   * Remember, by default, flex gives us justify-content: flex-start
+   */
+.nav-left {
+  align-items: center;
+  display: flex;
+}
+
+/** 
+   * I've got the SVG inside a flex container, so I align it into the middle
+   */
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.nav {
+  display: none;
+  flex-direction: row;
+  align-items: center;
+  margin: 0;
+  padding-left: 40px;
+}
+
+@media (min-width: 1085px) {
+  .nav {
+    display: flex;
+  }
+}
+
+ul {
+  list-style: none;
+}
+
+.nav li {
+  font-size: 14px;
+  margin: 0 20px;
+  cursor: pointer;
+}
+
+.nav-right {
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 45px;
+}
+
+/* SIDE MENU */
+.workspaces {
+  background: rgb(255, 255, 255);
+  border-radius: 18px;
+  /* border: 2px solid #ebebeb; */
+  color: rgb(65, 65, 65);
+  cursor: pointer;
+  display: none; /* and like that...it's gone */
+  padding: 8px 16px;
+  transition: all 420ms ease-in-out; /* what's this? explore a bit... */
+  text-decoration: none;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.75);
+  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Tahoma, Arial,
+    sans-serif;
+  font-size: 14px;
+}
+
+.logo-side {
+  color: #ffffff;
+}
+
+/* Notice you can do a hover state on an element, not just <a> links */
+.workspaces:hover {
+  background-color: #bae2da;
+}
+
+@media (min-width: 1085px) {
+  .workspaces {
+    display: block; /* and it's back, the power of display none! */
+  }
+}
+
+.hamburger-menu {
+  display: block; /* display:none starts to show up with responsive */
+  cursor: pointer;
+}
+
+/* why this breakpoint? ask the slack people - they choose it (it's not great tbh) */
+@media (min-width: 1085px) {
+  .hamburger-menu {
+    display: none;
+  }
+}
+
+/**
+ * =============
+ * OFF-CANVAS MENU
+ * =============
+ *
+ * Lot going on here, let's break it down
+ * Slack has an image with a translucent bg which combines bg color and image together
+ * position: fixed with 0,0,0,0 positions streches across the viewport
+ * z-index: 2 keeps it on top of the rest of the page
+ * I'm breaking the side-menu parent into two styles, one position and on design, so you can see how this looks better
+ * You don't have to do it this way at all...but it helps to see the separation of concerns here
+ */
+.side-menu-position {
+  padding-top: 25px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+}
+
+.side-menu-design {
+  /* background-color: #8f744c;
+  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/2522641/sidebar-background.png"); */
+  background: #74ebd2;
+  background-size: cover;
+  background-repeat: repeat;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateX(100%);
+  transition: 0.4s ease-in-out;
+}
+
+/* on top we need spacing from the border, so we have to use padding */
+/* but we also want that bottom margin to bleed to the edge, so no margins here */
+.side-menu-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* based on slack look, very faint */
+  display: flex;
+  justify-content: space-between;
+  padding: 0 25px 25px 25px;
+}
+
+/* Main content is pretty easy for layouts, pattern you'll see in web dev */
+/* The more text an element has, the easier it is to layout - BAM wisdom bomb! */
+.side-menu-content {
+  color: #fff;
+  font-size: 24px; /* could use ems here I guess but eh... */
+  margin: 25px;
+  padding-left: 0; /* zeroing it out */
+}
+
+.side-menu-content li {
+  list-style: none;
+  margin-bottom: 25px;
+}
+
+.side-menu-download {
+  background-color: #424247;
+  color: #ffffff;
+  padding: 15px 0;
+  text-align: center;
+  width: 100%;
+  border-radius: 10px;
+}
+
+/* Sticks the nav to the top of the page */
+#top-nav {
+  position: fixed;
+}
+
+/**
+ * Animation classes
+ */
+.show-menu {
+  opacity: 1;
+  transform: translateX(0%);
+}
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+/*
+ * Hide visually and from screen readers
+ */
+
+.hidden {
+  display: none !important;
+}
+
+/*
+ * Hide only visually, but have it available for screen readers:
+ * https://snook.ca/archives/html_and_css/hiding-content-for-accessibility
+ *
+ * 1. For long content, line feeds are not interpreted as spaces and small width
+ *    causes content to wrap 1 word per line:
+ *    https://medium.com/@jessebeach/beware-smushed-off-screen-accessible-text-5952a4c2cbfe
+ */
+
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  -webkit-clip-path: inset(50%);
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap; /* 1 */
+}
+
+/*
+ * Extends the .visuallyhidden class to allow the element
+ * to be focusable when navigated to via the keyboard:
+ * https://www.drupal.org/node/897638
+ */
+
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+  clip: auto;
+  -webkit-clip-path: none;
+  clip-path: none;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: static;
+  width: auto;
+  white-space: inherit;
+}
+
+/*
+ * Hide visually and from screen readers, but maintain layout
+ */
+
+.invisible {
+  visibility: hidden;
+}
+
+/* BILLBOARD */
+
+.billboard {
+  display: flex;
+  background: rgb(116, 235, 210);
+  background: linear-gradient(
+    90deg,
+    rgba(116, 235, 210, 1) 0%,
+    rgba(212, 238, 63, 1) 100%
+  );
+  height: 600px;
+  align-items: center;
+  justify-content: center;
+}
+
+.billboard-header {
+  font-size: 60px;
+  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Tahoma, Arial,
+    sans-serif;
+  margin: 100px 40px 40px 40px;
+  font-weight: 700;
+  line-height: 1.1875;
+  letter-spacing: -0.8px;
+  color: white;
+}
+
+.text {
+  display: none;
+}
+
+/* DESKTOP RESPONSIVE */
+@media (min-width: 769px) {
+  .billboard-header {
+    font-size: 70px;
+  }
+
+  /* MOUSE MOVING ANIMATION */
+
+  .mouse-container {
+    display: flex;
+  }
+
+  .moving-mouse-holder {
+    margin: auto;
+    margin-top: 80px;
+    width: 170px;
+  }
+
+  .moving-mouse-holder .mouse {
+    width: 26px;
+    height: 40px;
+    position: relative;
+    right: 0;
+    border-radius: 18px;
+    border: 2px solid #888888;
+    background: rgb(226, 255, 251);
+  }
+
+  .moving-mouse-holder .mouse-button {
+    background-color: #2be7d8;
+    width: 4px;
+    height: 10px;
+    border-radius: 2px;
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    margin: 0 0 0 -2px;
+    animation: mouse-scroll 1s infinite alternate;
+  }
+
+  .moving-mouse-holder .text {
+    margin-top: -30px;
+    margin-left: 40px;
+    color: #888888;
+    font-size: 12px;
+    line-height: 1em;
+    font-family: "Helvetica Neue", Helvetica, "Segoe UI", Tahoma, Arial,
+      sans-serif;
+  }
+
+  .text {
+    display: flex;
+  }
+  @keyframes mouse-scroll {
+    to {
+      transform: translate(0, 6px) scale(1, 0.8);
+    }
+  }
+}
+
+/* TABLET RESPONSIVE */
+@media (min-width: 546px) and (max-width: 768px) {
+  .billboard-header {
+    font-size: 70px;
+    margin: 150px 40px 40px 40px;
+  }
+
+  /* MOUSE MOVING ANIMATION */
+
+  .mouse-container {
+    display: flex;
+  }
+
+  .moving-mouse-holder {
+    margin: auto;
+    margin-top: 80px;
+    width: 170px;
+  }
+
+  .moving-mouse-holder .mouse {
+    width: 26px;
+    height: 40px;
+    position: relative;
+    right: 0;
+    border-radius: 18px;
+    border: 2px solid #888888;
+    background: rgb(226, 255, 251);
+  }
+
+  .moving-mouse-holder .mouse-button {
+    background-color: #2be7d8;
+    width: 4px;
+    height: 10px;
+    border-radius: 2px;
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    margin: 0 0 0 -2px;
+    animation: mouse-scroll 1s infinite alternate;
+  }
+
+  .moving-mouse-holder .text {
+    margin-top: -30px;
+    margin-left: 40px;
+    color: #888888;
+    font-size: 12px;
+    line-height: 1em;
+    font-family: "Helvetica Neue", Helvetica, "Segoe UI", Tahoma, Arial,
+      sans-serif;
+  }
+
+  .text {
+    display: flex;
+  }
+
+  @keyframes mouse-scroll {
+    to {
+      transform: translate(0, 6px) scale(1, 0.8);
+    }
+  }
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.billboard-content {
+  display: flex;
+}
+
+.billboard-headline {
+  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Tahoma, Arial,
+    sans-serif;
+  font-weight: 700;
+  line-height: 1.1875;
+  letter-spacing: -0.8px;
+  font-size: 40px;
+  margin: 20px 10px 10px 10px;
+}
+
+.billboard-subtext {
+  font-weight: 400;
+  line-height: 1.333;
+  letter-spacing: -0.2px;
+  margin-bottom: 20px;
+  font-family: Slack-Larsseit, "Helvetica Neue", Helvetica, "Segoe UI", Tahoma,
+    Arial, sans-serif;
+  font-size: 20px;
+}
+
+/* VIDEO */
+.video-section {
+  /* background-color: pink; */
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  text-align: center;
+  /* border-bottom: 1px solid #ebeaeb; */
+  margin-bottom: 20px;
+}
+
+.video-title-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 30px 20px -30px 20px;
+}
+
+.video-title {
+  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Tahoma, Arial,
+    sans-serif;
+  font-weight: 700;
+  line-height: 1.1875;
+  letter-spacing: -0.8px;
+  font-size: 40px;
+}
+
+.video-subtitle-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0px 20px 20px 20px;
+}
+.video-subtitle {
+  font-weight: 400;
+  line-height: 1.333;
+  letter-spacing: -0.2px;
+  /* margin-bottom: 20px; */
+  font-family: Slack-Larsseit, "Helvetica Neue", Helvetica, "Segoe UI", Tahoma,
+    Arial, sans-serif;
+  font-size: 20px;
+}
+
+iframe {
+  margin: 0 auto;
+}
+
+/* .button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 40px;
+  margin-bottom: 100px;
+} */
+
+/* .watch-button {
+  background-color: #e0e0e0;
+  border-radius: 20px;
+  color: rgb(56, 56, 56);
+  cursor: pointer;
+  padding: 10px 16px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.75);
+  cursor: pointer;
+  width: 250px;
+  font-family: Slack-Larsseit, "Helvetica Neue", Helvetica, "Segoe UI", Tahoma,
+    Arial, sans-serif;
+} */
+
+.watch-button:hover {
+  background-color: GREY;
+}
+
+
+/* FEATURES OVERVIEW */
+.feature-section {
+  /* background-color: pink; */
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  text-align: center;
+  justify-content; center;
+  /* border-bottom: 1px solid #ebeaeb; */
+  margin-bottom: 20px;
+}
+
+.feature-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.feature-title-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 30px 20px -30px 20px;
+}
+
+.feature-title {
+  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Tahoma, Arial,
+    sans-serif;
+  font-weight: 700;
+  line-height: 1.1875;
+  letter-spacing: -0.8px;
+  font-size: 40px;
+  /* margin: 0px 10px 0px 10px; */
+}
+
+.feature-subtitle-container {
+  display: flex;
+  justify-content: center;
+  margin: 0px 20px 20px 20px;
+}
+
+.feature-subtitle {
+  font-weight: 400;
+  line-height: 1.333;
+  letter-spacing: -0.2px;
+  margin-bottom: 0px;
+  font-family: Slack-Larsseit, "Helvetica Neue", Helvetica, "Segoe UI", Tahoma,
+    Arial, sans-serif;
+  font-size: 20px;
+}
+
+.ind-feature-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 100%;
+  margin: 20px 20px 20px 20px;
+  /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.75); */
+}
+
+.feature-image-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 30px 0px 30px;
+}
+
+.ind-feature-container:hover {
+  /* background-color: #74ebd2; */
+}
+
+.feature-image {
+  max-width: 100%;
+  margin: 40px 40px 0px 40px;
+}
+
+.feature-text {
+  display: flex;
+  max-width: 100%;
+  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Tahoma, Arial,
+    sans-serif;
+  flex-direction: column;
+  /* margin: 0px 0px 30px 30px; */
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.feature-headline {
+  font-size: 30px;
+  margin-top: -10px;
+  max-width: 90%;
+}
+
+.feature-subtext {
+  font-size: 20px;
+  margin-top: -10px;
+  max-width: 90%;
+}
+
+/* DESKTOP RESPONSIVE */
+@media (min-width: 769px) {
+  .ind-feature-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .feature-image {
+    max-width: 80%;
+    margin-left: 150px;
+  }
+
+.feature-text {
+  display: flex;
+ margin-right: 150px;
+}
+}
+
+/* TABLET RESPONSIVE */
+@media (min-width: 546px) and (max-width: 768px) {
+  .ind-feature-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .feature-image {
+    max-width: 80%;
+    margin-left: 100px;
+  }
+
+.feature-text {
+  display: flex;
+ margin-right: 100px;
+}
+}
+
+
+
+
+
+
+
+/* CALL TO ACTION  */
+.cta-section {
+  /* background-color: pink; */
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  text-align: center;
+  /* border-bottom: 1px solid #ebeaeb; */
+  margin-bottom: 20px;
+}
+
+.cta-title-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* margin-top: 100px; */
+  margin: 30px 20px -30px 20px;
+}
+
+.cta-title {
+  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Tahoma, Arial,
+    sans-serif;
+  font-weight: 700;
+  line-height: 1.1875;
+  letter-spacing: -0.8px;
+  font-size: 40px;
+}
+
+.cta-subtitle-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0px 20px 20px 20px;
+}
+.cta-subtitle {
+  font-weight: 400;
+  line-height: 1.333;
+  letter-spacing: -0.2px;
+  margin-bottom: 20px;
+  font-family: Slack-Larsseit, "Helvetica Neue", Helvetica, "Segoe UI", Tahoma,
+    Arial, sans-serif;
+  font-size: 20px;
+}
+
+.cta-content-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ind-cta-container {
+  max-width: 300px;
+  margin: 20px 20px 20px 20px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.75);
+}
+
+.ind-cta-container:hover {
+  background-color: #74ebd2;
+}
+
+.cta-image {
+  max-width: 200px;
+  margin: 40px 40px 0px 40px;
+}
+
+.cta-text {
+  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Tahoma, Arial,
+    sans-serif;
+  margin: 0px 40px 40px 40px;
+}
+
+.cta-headline {
+  font-size: 30px;
+}
+
+.cta-subtext {
+  font-size: 20px;
+}
+
+.two-ctas {
+  display: flex;
+  flex-direction: column;
+}
+
+/* DESKTOP RESPONSIVE */
+@media (min-width: 769px) {
+  .two-ctas {
+    display: flex;
+    flex-direction: row;
+    /* margin: 50px 329.5px 100px 329.5px; */
+  }
+}
+
+/* TABLET RESPONSIVE */
+@media (min-width: 546px) and (max-width: 768px) {
+  .two-ctas {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+/* FOOTER */
+.footer {
+  background: rgb(116, 235, 210);
+  background: linear-gradient(
+    90deg,
+    rgba(116, 235, 210, 1) 0%,
+    rgba(215, 241, 64, 1) 100%
+  );
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: 40px;
+  padding: 15px 25px;
+  color: rgb(7, 7, 7);
+  /* width: calc(100% - 50px); */
+}
+
+.nav-footer {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+}
+
+ul {
+  list-style: none;
+}
+
+.nav-footer li {
+  font-size: 14px;
+  margin: 0 20px;
+  cursor: pointer;
+}
+
+/* DESKTOP RESPONSIVE */
+@media (min-width: 769px) {
+  .nav-footer {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+/* TABLET RESPONSIVE */
+@media (min-width: 546px) and (max-width: 768px) {
+  .nav-footer {
+    display: flex;
+    flex-direction: row;
+  }
+}
